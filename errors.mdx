@@ -1,0 +1,20 @@
+---
+title: "Errors"
+---
+
+The Simplifi API uses the standard HTTP response codes to indicate the success or failure of an API request.
+
+A response code in the 2xx range indicates success, while a response code in the 4xx range indicates an error that failed as a result of the information that was provided. Codes in the 5xx range are the result of an error with Simplifi's servers.
+
+| Code | Response | Explanation |
+| --- | --- | --- |
+| 400 | Bad Request | Malformed request, invalid JSON |
+| 401 | Unauthorized | Missing or invalid token |
+| 403 | Forbidden | Valid token, but you cannot do this |
+| 404 | Not Found | The resource you are trying to access doesn't exist |
+| 409 | Conflict | The resource you are trying to create already exists |
+| 422 | Unprocessable Entity | Validation errors |
+| 429 | Too Many Requests | Your rate limit has been exceeded |
+| 500 | Internal Server Error | Something unexpected broke |
+| 502 | Bad Gateway | Upstream service failed |
+| 503 | Service Unavaliable | The Simplifi servers are down or overloaded |

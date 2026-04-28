@@ -1,0 +1,109 @@
+---
+title: "Authentication"
+---
+
+The Simplifi API authenticates using OAuth 2.0 with the client credentials grant flow. This is a machine-to-machine flow designed for server-side integrations.
+
+Your server exchanges a Client ID and Client Secret for a short-lived access token (1 hour), which is then used to authenticate the API request.
+
+To obtain your Client ID and Client Secret:
+
+1. Press **Integrations** under **Our Profile**
+2. Press **Explore APIs**
+3. Press the select button for the **Simplifi API**
+
+You will now see the **Client ID**, **Client Secret** as well as the **Base URL** and **Authorisation URL**.
+
+<Frame>
+  ![2026 04 08 15 54 52](/images/2026-04-08_15-54-52.png)
+</Frame>
+
+## Tokens
+
+OAuth 2.0 works by passing your Client ID, Client Secret to the authentication server in exchange for a short-lived access token. This token represents your application and **must be included** in the Authorization header of every API request.
+
+<Warning>
+  OAuth 2.0 Tokens expire exactly 1 hour after they are generated for you
+</Warning>
+
+When a token expires, simply repeat the authentication request to receive a new one. We recommend that you build a token manager in your application that caches the token and automatically re-authenticates when a 401 response is received.
+
+A successful authentication request returns a JSON response like this:
+
+```json JSON wrap
+{"__type":"SSJSON_Token_Access","access_token":"example_access_token","expires_in":3600,"refresh_token":"example_refresh_token","scope":"read","token_type":"Bearer"}
+```
+
+## Example: Requesting Employees using a Token Manager
+
+You can see an example of a token manager in Python below:
+
+```python python lines wrap
+import time
+import requests
+
+CLIENT_ID = "your_client_id"
+CLIENT_SECRET = "your_client_secret"
+AUTH_URL = "https://dev.simplifi.work/oauth/token"
+BASE_URL = "https://dev.simplifi.work/api"
+
+class SimplifiClient:
+    def __init__(self, client_id: str, client_secret: str):
+        self.client_id = client_id
+        self.client_secret = client_secret
+        self._token: str | None = None
+        self._token_expiry: float = 0
+
+    def get_access_token(self) -> str:
+        response = requests.post(
+            AUTH_URL,
+            data={"grant_type": "client_credentials"},
+            auth=(self.client_id, self.client_secret),
+        )
+        response.raise_for_status()
+        data = response.json()
+        self._token = data["access_token"]
+        # Subtract 30 seconds as a buffer so we refresh slightly before 			 expiry
+        self._token_expiry = time.time() + data["expires_in"] - 30
+        return self._token
+
+	# Is the token expired? if so _get_access_token
+    def get_valid_token(self) -> str:
+        if self._token is None or time.time() >= self._token_expiry:
+            self.get_access_token()
+        return self._token
+
+    def request(self, method: str, path: str, **kwargs) -> dict:
+        token = self.get_valid_token()
+        response = requests.request(
+            method,
+            f"{BASE_URL}{path}",
+            headers={"Authorization": f"Bearer {token}"},
+            **kwargs,
+        )
+        if response.status_code == 401:
+            # Token rejected by server — force a refresh and retry once
+            self._token = None
+            token = self._get_valid_token()
+            response = requests.request(
+                method,
+                f"{BASE_URL}{path}",
+                headers={"Authorization": f"Bearer {token}"},
+                **kwargs,
+            )
+        response.raise_for_status()
+        return response.json()
+
+    def get_employee(self, employee_id: str) -> dict:
+        return self.request("GET", f"/v1/employees/{employee_id}")
+
+    def get_employees(self) -> list:
+        return self.request("GET", "/v1/employees")
+
+
+# Usage
+client = SimplifiClient(CLIENT_ID, CLIENT_SECRET)
+employee = client.get_employee("123")
+```
+
+Note that when the `request` method in the `SimplifiClient` class is called, it gets a valid token by calling `get_valid_token` which checks if an hour has passed (minus 30 seconds) and if so, then it fetches a new, valid token by calling `get_access_token` .

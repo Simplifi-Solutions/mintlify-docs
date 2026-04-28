@@ -1,0 +1,21 @@
+---
+title: "The Job Queue Explained"
+---
+
+## About
+
+The Job Queue is how Simplifi manages scheduled and requested jobs.
+
+Jobs are anything that the user asks the server to do. Jobs either are requested instantaneously by a user, such as asking Simplifi to generate an excel file download, or are scheduled by a user or somebody from our team.
+
+<Frame>
+  ![Image 1](/image-1.png)
+</Frame>
+
+_The Job Queue View_
+
+<Frame>
+  ![Iwouldlikeareportgenerated](/Iwouldlikeareportgenerated.jpg)
+</Frame>
+
+This is a visual demonstration of the Job Queue. The User requests a report or other item that needs processing and the server adds the report to the queue. Once the job has moved to the front of the queue, the job is processed by the server, and sent back to the user if required.

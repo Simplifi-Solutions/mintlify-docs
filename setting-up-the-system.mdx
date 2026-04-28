@@ -1,0 +1,89 @@
+---
+title: "System Quick Start"
+---
+
+## About
+
+The "System" refers to the actual Simplifi application itself. In this module you can modify settings for Simplifi itself.
+
+## Setting Up Guide
+
+You can follow this guide to set up the system. This guide will run through heading by heading and detail what the settings are, what they do and provide an example of the setting. If a setting is complicated, it will lead to another page.
+
+<Warning>
+  System Settings that are self-explanatory such as Password Control, Facebook etc are not included.
+</Warning>
+
+1. **Company Details**
+
+   These are our company details. **Unsure why this is included** **ASK**
+1. **Server Settings**
+
+   These are the settings for the server **Unsure of many ASK. Duplicated Settings?**
+
+   | Setting Name     | Description                                                                                |
+   | :--------------- | :----------------------------------------------------------------------------------------- |
+   | Server Name      | The name of the server.                                                                    |
+   | Server JadRap    |                                                                                            |
+   | Server Directory | The file directory for the server. This is where the data is stored. **isit?**             |
+   | Server Name      |                                                                                            |
+   | Server Directory |                                                                                            |
+   | Releases Folder  | This is where the different releases (versions) scripts are stored in Dropbox              |
+   | SDS Tracking URL | If SDS tracking changes are being sent back to a server, this is the monitoring server URL |
+   | Time Zone        | This is the timezone that the server operates in                                           |
+1. **Website**
+
+   | Setting Name    | Description                                                          |
+   | :-------------- | :------------------------------------------------------------------- |
+   | Website URL     | This is the website for the company. **Unsure why this is relevant** |
+   | App URL         | This is the URL to the website that the app is hosted on.            |
+   | Website Folder  | This is the file directory that the website is stored in             |
+   | Default Portal  |                                                                      |
+   | Number Licences |                                                                      |
+   | Scripts Version |                                                                      |
+   | Menu Bar Class  |                                                                      |
+1. **Other Settings**
+
+   These are other miscellaneous settings related to the Google SSO/Calendar **VERIFY THIS**, Cloudflare and Job start reminders, Reports.
+
+   | Setting Name             | Description                                                                                                                  |
+   | :----------------------- | :--------------------------------------------------------------------------------------------------------------------------- |
+   | Google API Key           | The API key for Google. This is the same across Simplifi as an organisation. This can be found in our Google Cloud Dashboard |
+   | Google Client ID         | Our client ID for Google.                                                                                                    |
+   | Google API Key (Server)  | The API key for Google for the server.                                                                                       |
+   | Google Client Secret     |                                                                                                                              |
+   | Google Country Code      | The country that we are accessing the Google API from (nz for Simplifi NZ, Aus for Australia)                                |
+   | Job Start Reminder       |                                                                                                                              |
+   | Purge Reports After      | How many days before the system should delete generated reports                                                              |
+   | Max Work Radius          | The maximum radius in kilometres that somebody can receive work from                                                         |
+   | Disable After Inactivity | How long before an account should be disabled                                                                                |
+1. **OpenAI Settings**
+
+   These are the settings for Pete the chatbot.
+
+   | System Settings      | Description                                                                                                                                                |
+   | :------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------- |
+   | Model                | What model of ChatGPT Pete uses                                                                                                                            |
+   | Model - Mini         | What mini model of ChatGPT Pete uses                                                                                                                       |
+   | Model - Nano         | What nanomodel of ChatGPT Pete uses                                                                                                                        |
+   | API Key              | The API key for OpenAI                                                                                                                                     |
+   | Vector Store (Users) | This is a key pointing to where the files used to give Pete information about how Simplifi works are stored. This one is for the users.                    |
+   | Vector Store (Staff) | This is a key pointing to where the files used to give Pete information about how Simplifi works are stored. This one is for the staff of an organisation. |
+   | Context              | This is the context for Pete. Modifying this modifies how he speaks to users                                                                               |
+1. **Push Notification Sound Files**
+
+   These are the push notification sound effects that you can select for the various notifications Simplifi sends out via One Signal. Set this up with either "**one**" or "**glass**". These are the notification sounds that Simplifi uses.
+1. **Linked Backup Settings**
+
+   These are settings related to backing up Simplifi's data files (users, organisations etc). **Files Backup Folder** points to the folder in the computer that the server is running on that the system will firstly back up to. **True? Linked External Systems** are other live backup locations that are contained in other systems, these just point to the specific folder. **Do they? is it external or not no network options there?**
+1. **Test Server Email Exceptions**
+
+   Receiving emails from the test server does not work by default. If you would like to, for example, test the email function via the test server, you would want to add your email to this list. This would let the server still send you the email.
+1. **Release Notification Emails**
+
+   By writing your email in this text box, you will receive a notification every time there is a new release.
+1. **User Update Emails**
+
+   **ASK**
+
+Upon completing this guide, you will have entered all the main settings for this instance of Simplifi to run. **Make sure to save your work!** Press **Save Settings** at the top to save.

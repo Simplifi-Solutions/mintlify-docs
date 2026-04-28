@@ -1,0 +1,1742 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Simplifi API",
+    "version": "1.0.0",
+    "description": "Workforce management API",
+    "termsOfService": "https://apps.staffsync.co.nz/static/StaffSyncUserTermsOfService.pdf?openexternal=true",
+    "contact": {
+      "name": "Simplifi",
+      "email": "support@simplifi.work",
+      "url": "https://simplifi.work"
+    }
+  },
+  "externalDocs": {
+    "url": "https://docs.simplifi.work/authentication",
+    "description": "The Simplifi API Documentation"
+  },
+  "servers": [
+    {
+      "url": "https://{base_url}/api/v1",
+      "description": "Simplifi API Server",
+      "variables": {
+        "base_url": {
+          "description": "Your Simplifi instance base URL",
+          "default": "example.com"
+        }
+      }
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Access token obtained from /oauth/token. Pass as Authorization: Bearer {token}"
+      },
+      "BasicAuth": {
+        "type": "http",
+        "scheme": "basic",
+        "description": "Pass your client ID as the username and your client secret as the password. These are used only to obtain a bearer token from /oauth/token."
+      }
+    },
+    "responses": {
+      "Unauthorized": {
+        "description": "Unauthorized - missing or invalid token"
+      },
+      "Forbidden": {
+        "description": "Forbidden - valid token but insufficient permissions"
+      },
+      "NotFound": {
+        "description": "Not Found - the requested resource does not exist"
+      },
+      "BadRequest": {
+        "description": "Bad Request - malformed request syntax or invalid parameters"
+      },
+      "Conflict": {
+        "description": "Conflict - the request conflicts with the current state of the resource"
+      },
+      "UnprocessableEntity": {
+        "description": "Unprocessable Entity - the request was well-formed but contains semantic errors"
+      },
+      "TooManyRequests": {
+        "description": "Too Many Requests - rate limit exceeded"
+      },
+      "InternalServerError": {
+        "description": "Internal Server Error"
+      },
+      "BadGateway": {
+        "description": "Bad Gateway - upstream service failed"
+      },
+      "ServiceUnavailable": {
+        "description": "Service Unavailable"
+      }
+    },
+    "schemas": {
+      "PayRollCode": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier for the payroll code",
+            "example": "4630_116"
+          },
+          "code": {
+            "type": "string",
+            "description": "The payroll code label",
+            "example": "Annual Leave"
+          },
+          "payRollProvider": {
+            "type": "string",
+            "description": "The name of the payroll provider this code belongs to",
+            "example": "DataPay"
+          }
+        }
+      },
+      "Pagination": {
+        "type": "object",
+        "properties": {
+          "nextPage": {
+            "type": "string",
+            "description": "URL or cursor for the next page. Empty string if there is no next page.",
+            "example": ""
+          },
+          "page": {
+            "type": "integer",
+            "description": "The current page number",
+            "example": 1
+          },
+          "pageSize": {
+            "type": "integer",
+            "description": "The number of records per page",
+            "example": 200
+          },
+          "previousPage": {
+            "type": "string",
+            "description": "URL or cursor for the previous page. Empty string if there is no previous page.",
+            "example": ""
+          },
+          "totalPages": {
+            "type": "integer",
+            "description": "The total number of pages available",
+            "example": 1
+          },
+          "totalRecords": {
+            "type": "integer",
+            "description": "The total number of records across all pages",
+            "example": 1
+          }
+        }
+      },
+      "TimesheetDetail": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier for this timesheet detail entry",
+            "example": "2759_52442232"
+          },
+          "activity": {
+            "type": "string",
+            "description": "The ID of the activity associated with this detail entry",
+            "example": "2760_183"
+          },
+          "alternateDepartment": {
+            "type": "string",
+            "description": "An alternate department for this entry. Empty string if not set.",
+            "example": ""
+          },
+          "alternateOrganisation": {
+            "type": "string",
+            "description": "An alternate organisation for this entry. Empty string if not set.",
+            "example": ""
+          },
+          "finishTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The finish time of this detail entry in ISO 8601 format",
+            "example": "2026-04-21T07:00:00.000Z"
+          },
+          "hours": {
+            "type": "number",
+            "description": "The number of hours for this detail entry",
+            "example": 6.00
+          },
+          "mealBreak": {
+            "type": "boolean",
+            "description": "Whether this entry includes a meal break",
+            "example": false
+          },
+          "restBreak": {
+            "type": "boolean",
+            "description": "Whether this entry includes a rest break",
+            "example": false
+          },
+          "startTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The start time of this detail entry in ISO 8601 format",
+            "example": "2026-04-21T01:00:00.000Z"
+          }
+        }
+      },
+      "Timesheet": {
+        "type": "object",
+        "properties": {
+          "__type": {
+            "type": "string",
+            "description": "Internal type identifier",
+            "example": "SSJSON_API_Timesheet"
+          },
+          "id": {
+            "type": "string",
+            "description": "The unique identifier for the timesheet",
+            "example": "2240_11417925"
+          },
+          "approvedHours": {
+            "type": "number",
+            "nullable": true,
+            "description": "The number of approved hours. Null if not yet approved.",
+            "example": null
+          },
+          "approvedPayroll": {
+            "type": "string",
+            "nullable": true,
+            "description": "The approved payroll reference. Null if not yet approved.",
+            "example": null
+          },
+          "casualJob": {
+            "type": "boolean",
+            "description": "Whether this timesheet is for a casual job",
+            "example": false
+          },
+          "clockIn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "description": "The clock-in time in ISO 8601 format. Null if not clocked in.",
+            "example": null
+          },
+          "clockOut": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "description": "The clock-out time in ISO 8601 format. Null if not clocked out.",
+            "example": null
+          },
+          "contractedHoursId": {
+            "type": "string",
+            "description": "The ID of the contracted hours entry this timesheet was generated from",
+            "example": "2924_294328"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "The date of the timesheet in YYYY-MM-DD format",
+            "example": "2026-04-21"
+          },
+          "department": {
+            "$ref": "#/components/schemas/ContractedHoursDepartment"
+          },
+          "details": {
+            "type": "array",
+            "description": "A list of detail entries breaking down the timesheet into activity segments",
+            "items": {
+              "$ref": "#/components/schemas/TimesheetDetail"
+            }
+          },
+          "employeeId": {
+            "type": "string",
+            "description": "The ID of the employee this timesheet belongs to",
+            "example": "2095_1144974"
+          },
+          "finishTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The overall finish time of the timesheet in ISO 8601 format",
+            "example": "2026-04-21T07:00:00.000Z"
+          },
+          "hoursToPay": {
+            "type": "number",
+            "description": "The total payable hours for this timesheet",
+            "example": 6.00
+          },
+          "includesLeave": {
+            "type": "boolean",
+            "description": "Whether this timesheet includes any leave",
+            "example": false
+          },
+          "organisationPayRollId": {
+            "type": "string",
+            "description": "The ID of the organisation responsible for payroll",
+            "example": "2089_9531"
+          },
+          "organisationWorkedId": {
+            "type": "string",
+            "description": "The ID of the organisation where the work was performed",
+            "example": "2089_9531"
+          },
+          "overnight": {
+            "type": "boolean",
+            "description": "Whether this timesheet spans overnight",
+            "example": false
+          },
+          "processed": {
+            "type": "string",
+            "nullable": true,
+            "description": "The date/time the timesheet was processed for payroll. Null if not yet processed.",
+            "example": null
+          },
+          "role": {
+            "$ref": "#/components/schemas/ContractedHoursRole"
+          },
+          "shift": {
+            "allOf": [
+              { "$ref": "#/components/schemas/ContractedHoursShift" }
+            ],
+            "nullable": true,
+            "description": "The shift template applied to this timesheet. Null if not shift-based."
+          },
+          "startTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The overall start time of the timesheet in ISO 8601 format",
+            "example": "2026-04-21T01:00:00.000Z"
+          }
+        }
+      },
+      "PayPeriod": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier for the pay period",
+            "example": "2106_898371"
+          },
+          "calendar": {
+            "type": "string",
+            "description": "The name of the pay calendar this period belongs to",
+            "example": "Weekly"
+          },
+          "closed": {
+            "type": "string",
+            "nullable": true,
+            "description": "The date the pay period was closed, in YYYY-MM-DD format. Null if not yet closed.",
+            "example": null
+          },
+          "finishDate": {
+            "type": "string",
+            "format": "date",
+            "description": "The end date of the pay period in YYYY-MM-DD format",
+            "example": "2026-04-22"
+          },
+          "hours": {
+            "type": "number",
+            "description": "Total hours worked in this pay period",
+            "example": 0
+          },
+          "numberEmployees": {
+            "type": "integer",
+            "description": "The number of employees with timesheets in this pay period",
+            "example": 0
+          },
+          "numberTimesheets": {
+            "type": "integer",
+            "description": "The total number of timesheets in this pay period",
+            "example": 0
+          },
+          "payRollCompanyId": {
+            "type": "string",
+            "description": "The payroll company identifier. Empty string if not assigned.",
+            "example": ""
+          },
+          "payRollProvider": {
+            "type": "string",
+            "description": "The name of the payroll provider for this pay period",
+            "example": "iPayroll"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date",
+            "description": "The start date of the pay period in YYYY-MM-DD format",
+            "example": "2026-04-16"
+          }
+        }
+      },
+      "Shift": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier for the shift",
+            "example": "2786_12120"
+          },
+          "code": {
+            "type": "string",
+            "description": "A short code for the shift",
+            "example": "AM"
+          },
+          "finishTime": {
+            "type": "string",
+            "description": "The shift finish time in HH:MM format",
+            "example": "14:00"
+          },
+          "name": {
+            "type": "string",
+            "description": "The display name of the shift",
+            "example": "Morning"
+          },
+          "startTime": {
+            "type": "string",
+            "description": "The shift start time in HH:MM format",
+            "example": "06:00"
+          }
+        }
+      },
+      "Organisation": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier for the organisation",
+            "example": "2089_9531"
+          },
+          "address": {
+            "$ref": "#/components/schemas/Address"
+          },
+          "departments": {
+            "type": "array",
+            "description": "A list of departments within this organisation",
+            "items": {
+              "$ref": "#/components/schemas/Department"
+            }
+          },
+          "name": {
+            "type": "string",
+            "description": "The display name of the organisation",
+            "example": "Acme Supermarket"
+          },
+          "roles": {
+            "type": "array",
+            "description": "A list of all roles available across this organisation",
+            "items": {
+              "$ref": "#/components/schemas/Role"
+            }
+          },
+          "shifts": {
+            "type": "array",
+            "description": "A list of shift templates defined for this organisation",
+            "items": {
+              "$ref": "#/components/schemas/Shift"
+            }
+          },
+          "workDayFinishTime": {
+            "type": "string",
+            "description": "The default work day finish time for the organisation in HH:MM format",
+            "example": "22:00"
+          },
+          "workDayStartTime": {
+            "type": "string",
+            "description": "The default work day start time for the organisation in HH:MM format",
+            "example": "06:00"
+          }
+        }
+      },
+      "Address": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier for the address. Empty string if not assigned.",
+            "example": ""
+          },
+          "city": {
+            "type": "string",
+            "description": "City",
+            "example": "Christchurch"
+          },
+          "country": {
+            "type": "string",
+            "description": "Country. Empty string if not assigned.",
+            "example": ""
+          },
+          "line1": {
+            "type": "string",
+            "description": "First line of the address",
+            "example": "123 Fitzgerald Avenue"
+          },
+          "line2": {
+            "type": "string",
+            "description": "Second line of the address. Empty string if not assigned.",
+            "example": ""
+          },
+          "postalCode": {
+            "type": "integer",
+            "description": "Postal/ZIP code",
+            "example": 8011
+          },
+          "state": {
+            "type": "string",
+            "description": "State or region",
+            "example": "Canterbury"
+          },
+          "suburb": {
+            "type": "string",
+            "description": "Suburb. Empty string if not assigned.",
+            "example": ""
+          }
+        }
+      },
+      "ContractedHoursDepartment": {
+        "type": "object",
+        "description": "A minimal department reference used within contracted hours",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier of the department",
+            "example": "2784_119"
+          },
+          "name": {
+            "type": "string",
+            "description": "The display name of the department",
+            "example": "Deli"
+          }
+        }
+      },
+      "ContractedHoursRole": {
+        "type": "object",
+        "description": "A minimal role reference used within contracted hours",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier of the role",
+            "example": "2213_6559"
+          },
+          "name": {
+            "type": "string",
+            "description": "The display name of the role",
+            "example": "Retail Assistant"
+          }
+        }
+      },
+      "ContractedHoursShift": {
+        "type": "object",
+        "description": "A minimal shift reference used within contracted hours",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier of the shift",
+            "example": "2786_12120"
+          },
+          "name": {
+            "type": "string",
+            "description": "The display name of the shift",
+            "example": "Morning"
+          }
+        }
+      },
+      "ContractedHours": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier for this contracted hours entry",
+            "example": "2443_312283"
+          },
+          "day": {
+            "type": "integer",
+            "description": "The day of the week (1 = Monday, 7 = Sunday)",
+            "example": 1
+          },
+          "department": {
+            "$ref": "#/components/schemas/ContractedHoursDepartment"
+          },
+          "finishTime": {
+            "type": "string",
+            "nullable": true,
+            "description": "The finish time of the contracted shift in T HH:MM:SS.mmm format. Null if defined by a shift template.",
+            "example": "T07:00:00.000"
+          },
+          "minutesTotal": {
+            "type": "integer",
+            "description": "Total duration of the shift in minutes, including breaks",
+            "example": 480
+          },
+          "minutesWorking": {
+            "type": "integer",
+            "description": "Working duration of the shift in minutes, excluding unpaid breaks",
+            "example": 480
+          },
+          "role": {
+            "$ref": "#/components/schemas/ContractedHoursRole"
+          },
+          "shift": {
+            "allOf": [
+              { "$ref": "#/components/schemas/ContractedHoursShift" }
+            ],
+            "nullable": true,
+            "description": "The shift template applied to this entry. Null if start/finish times are set explicitly."
+          },
+          "startTime": {
+            "type": "string",
+            "nullable": true,
+            "description": "The start time of the contracted shift in T HH:MM:SS.mmm format. Null if defined by a shift template.",
+            "example": "T01:00:00.000"
+          },
+          "week": {
+            "type": "integer",
+            "description": "The week number within the pay cycle this entry applies to",
+            "example": 1
+          },
+          "workPattern": {
+            "type": "boolean",
+            "description": "Whether this entry is part of a work pattern",
+            "example": false
+          }
+        }
+      },
+      "Employee": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier for the employee",
+            "example": "2095_1144974"
+          },
+          "address": {
+            "$ref": "#/components/schemas/Address"
+          },
+          "contractedHours": {
+            "type": "array",
+            "description": "A list of the employee's contracted hours entries across the week",
+            "items": {
+              "$ref": "#/components/schemas/ContractedHours"
+            }
+          },
+          "firstNames": {
+            "type": "string",
+            "description": "The employee's first name(s)",
+            "example": "Jane"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "The employee's last name",
+            "example": "Smith"
+          },
+          "payRollCode": {
+            "type": "string",
+            "description": "The payroll code associated with this employee. Empty string if not assigned.",
+            "example": ""
+          }
+        }
+      },
+      "Role": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier for the role",
+            "example": "2213_6820"
+          },
+          "costCentreCode": {
+            "type": "string",
+            "description": "The cost centre code associated with this role. Empty string if not assigned.",
+            "example": ""
+          },
+          "defaultActivity": {
+            "type": "string",
+            "description": "The ID of the default activity assigned to this role",
+            "example": "2760_183"
+          },
+          "name": {
+            "type": "string",
+            "description": "The display name of the role",
+            "example": "Assistant Manager"
+          }
+        }
+      },
+      "Department": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier for the department",
+            "example": "2784_118"
+          },
+          "costCentreCode": {
+            "type": "string",
+            "description": "The cost centre code associated with this department. Empty string if not assigned.",
+            "example": ""
+          },
+          "manager": {
+            "type": "string",
+            "description": "The manager of the department. Empty string if not assigned.",
+            "example": ""
+          },
+          "name": {
+            "type": "string",
+            "description": "The display name of the department",
+            "example": "Bakery"
+          },
+          "payRollCode": {
+            "type": "string",
+            "description": "The payroll code associated with this department. Empty string if not assigned.",
+            "example": ""
+          },
+          "roles": {
+            "type": "array",
+            "description": "A list of roles within this department",
+            "items": {
+              "$ref": "#/components/schemas/Role"
+            }
+          },
+          "workDayFinishTime": {
+            "type": "string",
+            "description": "The default work day finish time for this department. Empty string if not set.",
+            "example": ""
+          },
+          "workDayStartTime": {
+            "type": "string",
+            "description": "The default work day start time for this department. Empty string if not set.",
+            "example": ""
+          }
+        }
+      },
+      "Activity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier for the activity",
+            "example": "2760_182"
+          },
+          "costCentre": {
+            "type": "string",
+            "description": "The cost centre associated with the activity. Empty string if not assigned.",
+            "example": ""
+          },
+          "isBreak": {
+            "type": "boolean",
+            "description": "Whether this activity is classified as a break",
+            "example": false
+          },
+          "isPaid": {
+            "type": "boolean",
+            "description": "Whether this activity is paid",
+            "example": true
+          },
+          "name": {
+            "type": "string",
+            "description": "The display name of the activity",
+            "example": "Annual Leave"
+          },
+          "payRollCodes": {
+            "type": "array",
+            "description": "A list of payroll codes associated with this activity",
+            "items": {
+              "$ref": "#/components/schemas/PayRollCode"
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "BearerAuth": []
+    }
+  ],
+  "paths": {
+    "/oauth/token": {
+      "post": {
+        "summary": "Exchange ID/Secret for a token",
+        "description": "Exchanges your client ID and secret for an access token.",
+        "operationId": "getToken",
+        "tags": ["Authentication"],
+        "security": [{ "BasicAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "grant_type": {
+                    "type": "string",
+                    "description": "The type of grant being requested. Must always be client_credentials.",
+                    "example": "client_credentials"
+                  }
+                },
+                "required": ["grant_type"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Token issued successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "__type": {
+                      "type": "string",
+                      "description": "Internal type identifier",
+                      "example": "SSJSON_Token_Access"
+                    },
+                    "access_token": {
+                      "type": "string",
+                      "description": "The bearer token to use in subsequent API requests"
+                    },
+                    "expires_in": {
+                      "type": "integer",
+                      "description": "Seconds until the token expires. This will always be 3600.",
+                      "example": 3600
+                    },
+                    "refresh_token": {
+                      "type": "string",
+                      "description": "Token that can be used to refresh the session"
+                    },
+                    "scope": {
+                      "type": "string",
+                      "description": "The permission scope granted",
+                      "example": "read"
+                    },
+                    "token_type": {
+                      "type": "string",
+                      "description": "The token type. Will always be Bearer.",
+                      "example": "Bearer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "409": { "$ref": "#/components/responses/Conflict" },
+          "422": { "$ref": "#/components/responses/UnprocessableEntity" },
+          "429": { "$ref": "#/components/responses/TooManyRequests" },
+          "500": { "$ref": "#/components/responses/InternalServerError" },
+          "502": { "$ref": "#/components/responses/BadGateway" },
+          "503": { "$ref": "#/components/responses/ServiceUnavailable" }
+        }
+      }
+    },
+    "/oauth/revoke": {
+      "post": {
+        "summary": "Revoke a token",
+        "description": "Revokes an access token.",
+        "operationId": "revokeToken",
+        "tags": ["Authentication"],
+        "responses": {
+          "200": {
+            "description": "Token revoked successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "409": { "$ref": "#/components/responses/Conflict" },
+          "422": { "$ref": "#/components/responses/UnprocessableEntity" },
+          "429": { "$ref": "#/components/responses/TooManyRequests" },
+          "500": { "$ref": "#/components/responses/InternalServerError" },
+          "502": { "$ref": "#/components/responses/BadGateway" },
+          "503": { "$ref": "#/components/responses/ServiceUnavailable" }
+        }
+      }
+    },
+    "/oauth/introspect": {
+      "post": {
+        "summary": "Check if a token is valid",
+        "description": "Checks if an access token is valid.",
+        "operationId": "introspectToken",
+        "tags": ["Authentication"],
+        "responses": {
+          "200": {
+            "description": "Token is valid"
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "409": { "$ref": "#/components/responses/Conflict" },
+          "422": { "$ref": "#/components/responses/UnprocessableEntity" },
+          "429": { "$ref": "#/components/responses/TooManyRequests" },
+          "500": { "$ref": "#/components/responses/InternalServerError" },
+          "502": { "$ref": "#/components/responses/BadGateway" },
+          "503": { "$ref": "#/components/responses/ServiceUnavailable" }
+        }
+      }
+    },
+    "/activities": {
+      "get": {
+        "summary": "List all activities",
+        "description": "Returns a list of all the activities in your organisation.",
+        "operationId": "listActivities",
+        "tags": ["Activities"],
+        "responses": {
+          "200": {
+            "description": "A list of activities",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Activity"
+                  }
+                },
+                "example": [
+                  {
+                    "id": "2760_182",
+                    "costCentre": "",
+                    "isBreak": false,
+                    "isPaid": true,
+                    "name": "Annual Leave",
+                    "payRollCodes": [
+                      {
+                        "id": "4630_116",
+                        "code": "Annual Leave",
+                        "payRollProvider": "DataPay"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "2760_180",
+                    "costCentre": "",
+                    "isBreak": true,
+                    "isPaid": true,
+                    "name": "Break",
+                    "payRollCodes": [
+                      {
+                        "id": "4630_114",
+                        "code": "Break",
+                        "payRollProvider": "DataPay"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "2760_179",
+                    "costCentre": "",
+                    "isBreak": true,
+                    "isPaid": false,
+                    "name": "Lunch Break",
+                    "payRollCodes": [
+                      {
+                        "id": "4630_113",
+                        "code": "Lunch Break",
+                        "payRollProvider": "DataPay"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "2760_181",
+                    "costCentre": "",
+                    "isBreak": false,
+                    "isPaid": true,
+                    "name": "Sick Leave",
+                    "payRollCodes": [
+                      {
+                        "id": "4630_115",
+                        "code": "Sick Leave",
+                        "payRollProvider": "DataPay"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "409": { "$ref": "#/components/responses/Conflict" },
+          "422": { "$ref": "#/components/responses/UnprocessableEntity" },
+          "429": { "$ref": "#/components/responses/TooManyRequests" },
+          "500": { "$ref": "#/components/responses/InternalServerError" },
+          "502": { "$ref": "#/components/responses/BadGateway" },
+          "503": { "$ref": "#/components/responses/ServiceUnavailable" }
+        }
+      }
+    },
+    "/activities/{activity_id}": {
+      "get": {
+        "summary": "Get an activity",
+        "description": "Returns details about a single activity by its ID.",
+        "operationId": "getActivity",
+        "tags": ["Activities"],
+        "parameters": [
+          {
+            "name": "activity_id",
+            "in": "path",
+            "description": "The unique identifier of the activity to retrieve",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "2760_182"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Activity details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Activity"
+                },
+                "example": {
+                  "id": "2760_182",
+                  "costCentre": "",
+                  "isBreak": false,
+                  "isPaid": true,
+                  "name": "Annual Leave",
+                  "payRollCodes": [
+                    {
+                      "id": "4630_116",
+                      "code": "Annual Leave",
+                      "payRollProvider": "DataPay"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "409": { "$ref": "#/components/responses/Conflict" },
+          "422": { "$ref": "#/components/responses/UnprocessableEntity" },
+          "429": { "$ref": "#/components/responses/TooManyRequests" },
+          "500": { "$ref": "#/components/responses/InternalServerError" },
+          "502": { "$ref": "#/components/responses/BadGateway" },
+          "503": { "$ref": "#/components/responses/ServiceUnavailable" }
+        }
+      }
+    },
+    "/departments": {
+      "get": {
+        "summary": "List all departments",
+        "description": "Returns a list of all the departments in your organisation.",
+        "operationId": "listDepartments",
+        "tags": ["Departments"],
+        "responses": {
+          "200": {
+            "description": "A list of departments",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Department"
+                  }
+                },
+                "example": [
+                  {
+                    "id": "2784_118",
+                    "costCentreCode": "",
+                    "manager": "",
+                    "name": "Bakery",
+                    "payRollCode": "",
+                    "roles": [
+                      {
+                        "id": "2213_6820",
+                        "costCentreCode": "",
+                        "defaultActivity": "2760_183",
+                        "name": "Assistant Manager"
+                      },
+                      {
+                        "id": "2213_6559",
+                        "costCentreCode": "",
+                        "defaultActivity": "2760_183",
+                        "name": "Retail Assistant"
+                      }
+                    ],
+                    "workDayFinishTime": "",
+                    "workDayStartTime": ""
+                  },
+                  {
+                    "id": "2784_121",
+                    "costCentreCode": "",
+                    "manager": "",
+                    "name": "Storeroom",
+                    "payRollCode": "",
+                    "roles": [],
+                    "workDayFinishTime": "",
+                    "workDayStartTime": ""
+                  }
+                ]
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "409": { "$ref": "#/components/responses/Conflict" },
+          "422": { "$ref": "#/components/responses/UnprocessableEntity" },
+          "429": { "$ref": "#/components/responses/TooManyRequests" },
+          "500": { "$ref": "#/components/responses/InternalServerError" },
+          "502": { "$ref": "#/components/responses/BadGateway" },
+          "503": { "$ref": "#/components/responses/ServiceUnavailable" }
+        }
+      }
+    },
+    "/departments/{department_id}": {
+      "get": {
+        "summary": "Get a department",
+        "description": "Returns details about a single department by its ID.",
+        "operationId": "getDepartment",
+        "tags": ["Departments"],
+        "parameters": [
+          {
+            "name": "department_id",
+            "in": "path",
+            "description": "The unique identifier of the department to retrieve",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "2784_118"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Department details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Department"
+                },
+                "example": {
+                  "id": "2784_118",
+                  "costCentreCode": "",
+                  "manager": "",
+                  "name": "Bakery",
+                  "payRollCode": "",
+                  "roles": [
+                    {
+                      "id": "2213_6820",
+                      "costCentreCode": "",
+                      "defaultActivity": "2760_183",
+                      "name": "Assistant Manager"
+                    },
+                    {
+                      "id": "2213_6559",
+                      "costCentreCode": "",
+                      "defaultActivity": "2760_183",
+                      "name": "Retail Assistant"
+                    }
+                  ],
+                  "workDayFinishTime": "",
+                  "workDayStartTime": ""
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "409": { "$ref": "#/components/responses/Conflict" },
+          "422": { "$ref": "#/components/responses/UnprocessableEntity" },
+          "429": { "$ref": "#/components/responses/TooManyRequests" },
+          "500": { "$ref": "#/components/responses/InternalServerError" },
+          "502": { "$ref": "#/components/responses/BadGateway" },
+          "503": { "$ref": "#/components/responses/ServiceUnavailable" }
+        }
+      }
+    },
+    "/employees": {
+      "get": {
+        "summary": "List all employees",
+        "description": "Returns a list of all the employees in your organisation.",
+        "operationId": "listEmployees",
+        "tags": ["Employees"],
+        "responses": {
+          "200": {
+            "description": "A list of employees",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Employee"
+                  }
+                },
+                "example": [
+                  {
+                    "id": "2095_1144974",
+                    "address": {
+                      "id": "",
+                      "city": "Christchurch",
+                      "country": "",
+                      "line1": "123 Fitzgerald Avenue",
+                      "line2": "",
+                      "postalCode": 8011,
+                      "state": "Canterbury",
+                      "suburb": ""
+                    },
+                    "contractedHours": [
+                      {
+                        "id": "2443_312283",
+                        "day": 1,
+                        "department": { "id": "2784_119", "name": "Deli" },
+                        "finishTime": null,
+                        "minutesTotal": 480,
+                        "minutesWorking": 480,
+                        "role": { "id": "2213_6559", "name": "Retail Assistant" },
+                        "shift": { "id": "2786_12120", "name": "Morning" },
+                        "startTime": null,
+                        "week": 1,
+                        "workPattern": false
+                      },
+                      {
+                        "id": "2443_312284",
+                        "day": 2,
+                        "department": { "id": "2784_119", "name": "Deli" },
+                        "finishTime": "T07:00:00.000",
+                        "minutesTotal": 360,
+                        "minutesWorking": 360,
+                        "role": { "id": "2213_6559", "name": "Retail Assistant" },
+                        "shift": null,
+                        "startTime": "T01:00:00.000",
+                        "week": 1,
+                        "workPattern": false
+                      }
+                    ],
+                    "firstNames": "Jane",
+                    "lastName": "Smith",
+                    "payRollCode": ""
+                  }
+                ]
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "409": { "$ref": "#/components/responses/Conflict" },
+          "422": { "$ref": "#/components/responses/UnprocessableEntity" },
+          "429": { "$ref": "#/components/responses/TooManyRequests" },
+          "500": { "$ref": "#/components/responses/InternalServerError" },
+          "502": { "$ref": "#/components/responses/BadGateway" },
+          "503": { "$ref": "#/components/responses/ServiceUnavailable" }
+        }
+      }
+    },
+    "/employees/{employee_id}": {
+      "get": {
+        "summary": "Get an employee",
+        "description": "Returns details about a single employee by their ID.",
+        "operationId": "getEmployee",
+        "tags": ["Employees"],
+        "parameters": [
+          {
+            "name": "employee_id",
+            "in": "path",
+            "description": "The unique identifier of the employee to retrieve",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "2095_1144974"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Employee details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Employee"
+                },
+                "example": {
+                  "id": "2095_1144974",
+                  "address": {
+                    "id": "",
+                    "city": "Christchurch",
+                    "country": "",
+                    "line1": "123 Fitzgerald Avenue",
+                    "line2": "",
+                    "postalCode": 8011,
+                    "state": "Canterbury",
+                    "suburb": ""
+                  },
+                  "contractedHours": [
+                    {
+                      "id": "2443_312283",
+                      "day": 1,
+                      "department": { "id": "2784_119", "name": "Deli" },
+                      "finishTime": null,
+                      "minutesTotal": 480,
+                      "minutesWorking": 480,
+                      "role": { "id": "2213_6559", "name": "Retail Assistant" },
+                      "shift": { "id": "2786_12120", "name": "Morning" },
+                      "startTime": null,
+                      "week": 1,
+                      "workPattern": false
+                    },
+                    {
+                      "id": "2443_312284",
+                      "day": 2,
+                      "department": { "id": "2784_119", "name": "Deli" },
+                      "finishTime": "T07:00:00.000",
+                      "minutesTotal": 360,
+                      "minutesWorking": 360,
+                      "role": { "id": "2213_6559", "name": "Retail Assistant" },
+                      "shift": null,
+                      "startTime": "T01:00:00.000",
+                      "week": 1,
+                      "workPattern": false
+                    }
+                  ],
+                  "firstNames": "Jane",
+                  "lastName": "Smith",
+                  "payRollCode": ""
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "409": { "$ref": "#/components/responses/Conflict" },
+          "422": { "$ref": "#/components/responses/UnprocessableEntity" },
+          "429": { "$ref": "#/components/responses/TooManyRequests" },
+          "500": { "$ref": "#/components/responses/InternalServerError" },
+          "502": { "$ref": "#/components/responses/BadGateway" },
+          "503": { "$ref": "#/components/responses/ServiceUnavailable" }
+        }
+      }
+    },
+    "/organisations": {
+      "get": {
+        "summary": "List all organisations",
+        "description": "Returns a list of all the organisations under your head office. Returns only your organisation if you don't have any organisations under yours.",
+        "operationId": "listOrganisations",
+        "tags": ["Organisations"],
+        "parameters": [
+          {
+            "name": "organisation_ID",
+            "in": "query",
+            "description": "Returns a specific organisation under your head office by its organisation ID.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of organisations",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Organisation"
+                  }
+                },
+                "example": [
+                  {
+                    "id": "2089_9531",
+                    "address": {
+                      "id": "",
+                      "city": "Auckland",
+                      "country": "",
+                      "line1": "182 Apirana Avenue",
+                      "line2": "",
+                      "postalCode": 1072,
+                      "state": "Auckland",
+                      "suburb": "Glen Innes"
+                    },
+                    "departments": [
+                      {
+                        "id": "2784_118",
+                        "costCentreCode": "",
+                        "manager": "",
+                        "name": "Bakery",
+                        "payRollCode": "",
+                        "roles": [
+                          { "id": "2213_6820", "costCentreCode": "", "defaultActivity": "2760_183", "name": "Assistant Manager" },
+                          { "id": "2213_6559", "costCentreCode": "", "defaultActivity": "2760_183", "name": "Retail Assistant" }
+                        ],
+                        "workDayFinishTime": "",
+                        "workDayStartTime": ""
+                      },
+                      {
+                        "id": "2784_121",
+                        "costCentreCode": "",
+                        "manager": "",
+                        "name": "Storeroom",
+                        "payRollCode": "",
+                        "roles": [],
+                        "workDayFinishTime": "",
+                        "workDayStartTime": ""
+                      }
+                    ],
+                    "name": "Acme Supermarket",
+                    "roles": [
+                      { "id": "2213_6820", "costCentreCode": "", "defaultActivity": "2760_183", "name": "Assistant Manager" },
+                      { "id": "2213_6559", "costCentreCode": "", "defaultActivity": "2760_183", "name": "Retail Assistant" }
+                    ],
+                    "shifts": [
+                      { "id": "2786_12120", "code": "AM", "finishTime": "14:00", "name": "Morning", "startTime": "06:00" },
+                      { "id": "2786_12121", "code": "PM", "finishTime": "22:00", "name": "Afternoon", "startTime": "14:00" }
+                    ],
+                    "workDayFinishTime": "22:00",
+                    "workDayStartTime": "06:00"
+                  }
+                ]
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "409": { "$ref": "#/components/responses/Conflict" },
+          "422": { "$ref": "#/components/responses/UnprocessableEntity" },
+          "429": { "$ref": "#/components/responses/TooManyRequests" },
+          "500": { "$ref": "#/components/responses/InternalServerError" },
+          "502": { "$ref": "#/components/responses/BadGateway" },
+          "503": { "$ref": "#/components/responses/ServiceUnavailable" }
+        }
+      }
+    },
+    "/payperiods": {
+      "get": {
+        "summary": "List all pay periods",
+        "description": "Returns a list of all the pay periods/calendars in your organisation.",
+        "operationId": "listPayPeriods",
+        "tags": ["Pay Periods"],
+        "responses": {
+          "200": {
+            "description": "A list of pay periods",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PayPeriod"
+                  }
+                },
+                "example": [
+                  {
+                    "id": "2106_898371",
+                    "calendar": "Weekly",
+                    "closed": null,
+                    "finishDate": "2026-04-22",
+                    "hours": 0,
+                    "numberEmployees": 0,
+                    "numberTimesheets": 0,
+                    "payRollCompanyId": "",
+                    "payRollProvider": "iPayroll",
+                    "startDate": "2026-04-16"
+                  },
+                  {
+                    "id": "2106_898372",
+                    "calendar": "Weekly",
+                    "closed": null,
+                    "finishDate": "2026-04-15",
+                    "hours": 0,
+                    "numberEmployees": 0,
+                    "numberTimesheets": 0,
+                    "payRollCompanyId": "",
+                    "payRollProvider": "iPayroll",
+                    "startDate": "2026-04-09"
+                  }
+                ]
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "409": { "$ref": "#/components/responses/Conflict" },
+          "422": { "$ref": "#/components/responses/UnprocessableEntity" },
+          "429": { "$ref": "#/components/responses/TooManyRequests" },
+          "500": { "$ref": "#/components/responses/InternalServerError" },
+          "502": { "$ref": "#/components/responses/BadGateway" },
+          "503": { "$ref": "#/components/responses/ServiceUnavailable" }
+        }
+      }
+    },
+    "/payperiods/{payperiod_id}": {
+      "get": {
+        "summary": "Get a pay period",
+        "description": "Returns details about a single pay period by its ID.",
+        "operationId": "getPayPeriod",
+        "tags": ["Pay Periods"],
+        "parameters": [
+          {
+            "name": "payperiod_id",
+            "in": "path",
+            "description": "The unique identifier of the pay period to retrieve",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "2106_898371"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pay period details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PayPeriod"
+                },
+                "example": {
+                  "id": "2106_898371",
+                  "calendar": "Weekly",
+                  "closed": null,
+                  "finishDate": "2026-04-22",
+                  "hours": 0,
+                  "numberEmployees": 0,
+                  "numberTimesheets": 0,
+                  "payRollCompanyId": "",
+                  "payRollProvider": "iPayroll",
+                  "startDate": "2026-04-16"
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "409": { "$ref": "#/components/responses/Conflict" },
+          "422": { "$ref": "#/components/responses/UnprocessableEntity" },
+          "429": { "$ref": "#/components/responses/TooManyRequests" },
+          "500": { "$ref": "#/components/responses/InternalServerError" },
+          "502": { "$ref": "#/components/responses/BadGateway" },
+          "503": { "$ref": "#/components/responses/ServiceUnavailable" }
+        }
+      }
+    },
+    "/timesheets": {
+      "get": {
+        "summary": "List all timesheets",
+        "description": "Returns a paginated list of all the timesheets in your organisation.",
+        "operationId": "listTimesheets",
+        "tags": ["Timesheets"],
+        "responses": {
+          "200": {
+            "description": "A paginated list of timesheets",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "__type": {
+                      "type": "string",
+                      "description": "Internal type identifier",
+                      "example": "SSJSON_API_PaginatedDataArray"
+                    },
+                    "data": {
+                      "type": "array",
+                      "description": "The list of timesheets for the current page",
+                      "items": {
+                        "$ref": "#/components/schemas/Timesheet"
+                      }
+                    },
+                    "pagination": {
+                      "$ref": "#/components/schemas/Pagination"
+                    }
+                  }
+                },
+                "example": {
+                  "__type": "SSJSON_API_PaginatedDataArray",
+                  "data": [
+                    {
+                      "__type": "SSJSON_API_Timesheet",
+                      "id": "2240_11417925",
+                      "approvedHours": null,
+                      "approvedPayroll": null,
+                      "casualJob": false,
+                      "clockIn": null,
+                      "clockOut": null,
+                      "contractedHoursId": "2924_294328",
+                      "date": "2026-04-21",
+                      "department": { "id": "2784_119", "name": "Deli" },
+                      "details": [
+                        {
+                          "id": "2759_52442232",
+                          "activity": "2760_183",
+                          "alternateDepartment": "",
+                          "alternateOrganisation": "",
+                          "finishTime": "2026-04-21T07:00:00.000Z",
+                          "hours": 6.00,
+                          "mealBreak": false,
+                          "restBreak": false,
+                          "startTime": "2026-04-21T01:00:00.000Z"
+                        }
+                      ],
+                      "employeeId": "2095_1144974",
+                      "finishTime": "2026-04-21T07:00:00.000Z",
+                      "hoursToPay": 6.00,
+                      "includesLeave": false,
+                      "organisationPayRollId": "2089_9531",
+                      "organisationWorkedId": "2089_9531",
+                      "overnight": false,
+                      "processed": null,
+                      "role": { "id": "2213_6559", "name": "Retail Assistant" },
+                      "shift": null,
+                      "startTime": "2026-04-21T01:00:00.000Z"
+                    }
+                  ],
+                  "pagination": {
+                    "nextPage": "",
+                    "page": 1,
+                    "pageSize": 200,
+                    "previousPage": "",
+                    "totalPages": 1,
+                    "totalRecords": 1
+                  }
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "409": { "$ref": "#/components/responses/Conflict" },
+          "422": { "$ref": "#/components/responses/UnprocessableEntity" },
+          "429": { "$ref": "#/components/responses/TooManyRequests" },
+          "500": { "$ref": "#/components/responses/InternalServerError" },
+          "502": { "$ref": "#/components/responses/BadGateway" },
+          "503": { "$ref": "#/components/responses/ServiceUnavailable" }
+        }
+      }
+    },
+    "/timesheets/{timesheet_id}": {
+      "get": {
+        "summary": "Get a timesheet",
+        "description": "Returns details about a single timesheet by its ID.",
+        "operationId": "getTimesheet",
+        "tags": ["Timesheets"],
+        "parameters": [
+          {
+            "name": "timesheet_id",
+            "in": "path",
+            "description": "The unique identifier of the timesheet to retrieve",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "2240_11417925"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Timesheet details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Timesheet"
+                },
+                "example": {
+                  "__type": "SSJSON_API_Timesheet",
+                  "id": "2240_11417925",
+                  "approvedHours": null,
+                  "approvedPayroll": null,
+                  "casualJob": false,
+                  "clockIn": null,
+                  "clockOut": null,
+                  "contractedHoursId": "2924_294328",
+                  "date": "2026-04-21",
+                  "department": { "id": "2784_119", "name": "Deli" },
+                  "details": [
+                    {
+                      "id": "2759_52442232",
+                      "activity": "2760_183",
+                      "alternateDepartment": "",
+                      "alternateOrganisation": "",
+                      "finishTime": "2026-04-21T07:00:00.000Z",
+                      "hours": 6.00,
+                      "mealBreak": false,
+                      "restBreak": false,
+                      "startTime": "2026-04-21T01:00:00.000Z"
+                    }
+                  ],
+                  "employeeId": "2095_1144974",
+                  "finishTime": "2026-04-21T07:00:00.000Z",
+                  "hoursToPay": 6.00,
+                  "includesLeave": false,
+                  "organisationPayRollId": "2089_9531",
+                  "organisationWorkedId": "2089_9531",
+                  "overnight": false,
+                  "processed": null,
+                  "role": { "id": "2213_6559", "name": "Retail Assistant" },
+                  "shift": null,
+                  "startTime": "2026-04-21T01:00:00.000Z"
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "409": { "$ref": "#/components/responses/Conflict" },
+          "422": { "$ref": "#/components/responses/UnprocessableEntity" },
+          "429": { "$ref": "#/components/responses/TooManyRequests" },
+          "500": { "$ref": "#/components/responses/InternalServerError" },
+          "502": { "$ref": "#/components/responses/BadGateway" },
+          "503": { "$ref": "#/components/responses/ServiceUnavailable" }
+        }
+      }
+    },
+    "/helloworld": {
+      "get": {
+        "summary": "Hello World Test",
+        "description": "For testing. Returns your organisation name if set up correctly.",
+        "operationId": "helloWorld",
+        "tags": ["Misc"],
+        "responses": {
+          "200": {
+            "description": "Returns the organisation name as a plain string",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Hello Acme Supermarket"
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "409": { "$ref": "#/components/responses/Conflict" },
+          "422": { "$ref": "#/components/responses/UnprocessableEntity" },
+          "429": { "$ref": "#/components/responses/TooManyRequests" },
+          "500": { "$ref": "#/components/responses/InternalServerError" },
+          "502": { "$ref": "#/components/responses/BadGateway" },
+          "503": { "$ref": "#/components/responses/ServiceUnavailable" }
+        }
+      }
+    }
+  }
+}

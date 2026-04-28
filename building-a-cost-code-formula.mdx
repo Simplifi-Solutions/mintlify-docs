@@ -1,0 +1,32 @@
+---
+title: "Building and Using Cost Code formulas"
+---
+
+### Building a cost centre code “formula”
+
+Cost centre codes are not invented in this system—they must **match what exists in payroll**, so you configure a formula that constructs the code from known attributes.
+
+- Use a **Room/Department payroll code** (where the person is working).
+- Or use **Home room payroll code** (their “main” location, even if they sometimes work elsewhere).
+- Optionally append a **Role code** (e.g., “MAT” + “10” where MAT = maternity ward and 10 = nurse role code).
+- You can insert **fixed text separators** (e.g., “MAT/10”).
+
+You can create **multiple rules** (e.g., several different formulas) and choose which one a provider uses.
+
+### Step by step:
+
+1. Press **New Cost Centre Code** and type in a name. You can press the **In Use** toggle to archive the cost centre code if you'd like it to not be available for use. Press Save Code
+
+<Frame>
+  ![2026 03 09 9 21 16](/images/2026-03-09_9-21-16.png)
+</Frame>
+
+2. Construct your formula using the system options. If you'd like to add free text then enter the text in the box before pressing the plus on the right.
+
+<Frame>
+  ![2026 03 09 9 26 57](/images/2026-03-09_9-26-57.png)
+</Frame>
+
+Here's an example formula for a Room_PayRollCode.
+
+You will then need to set up when to apply the code using the [Payroll Rules Engine](/payroll-rules-engine). For a tutorial on [how to make a new payroll rule in the engine, press here](/how-to-make-a-new-payroll-rule-in-the-engine)

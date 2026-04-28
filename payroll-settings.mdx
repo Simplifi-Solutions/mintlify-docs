@@ -1,0 +1,141 @@
+---
+title: "Our Payroll Settings"
+---
+
+Once you have connected a payroll provider (via API Integrations), you’ll need to configure how the system should treat payroll-related data for that provider. Your organisation most likely will only use **one** payroll provider, but in some cases (most commonly during a migration) your organisation may temporarily have **two providers** configured at once. The payroll-provider dropdown only shows providers that have been created/added in the back-end system for that organisation. To add more payroll providers, **contact us.**
+
+## Payroll Provider Settings
+
+### Payroll provider dropdown
+
+Use the dropdown at the top of the page to select which payroll provider you are configuring. Settings in this section are **provider-specific:** Depending on your provider, you may have custom fields you need to configure.
+
+## Payroll calendars
+
+<Frame>
+  ![2026 03 09 9 10 44](/images/2026-03-09_9-10-44.png)
+</Frame>
+
+Payroll calendars determine **when staff are paid** (weekly, fortnightly, monthly, etc.) and which pay cycle each staff member belongs to.
+
+- **When API syncing is enabled:** pay calendars are typically **synced automatically** from the payroll system.
+- **When API syncing is not enabled (manual setup):** you will need to **create calendars manually**, including pay frequency and first pay date.
+
+You can have **multiple calendars** if different groups of staff are paid on different schedules (e.g., salaried staff monthly, casual staff weekly/fortnightly).
+
+To create a new payroll calendar: enter the **Name, iPayroll ID** and **Frequency.**
+
+## Cost centre codes
+
+Cost centre codes are used to allocate labour cost to the right place in payroll reporting (e.g., department/ward/room, role type). These codes are used as defaults when exporting or mapping timesheet/rostering data into payroll.
+
+Cost centre code rules are configured once (in the Cost Centre Codes area) and can then be selected/used by each payroll provider. This is intentional because organisations usually try to keep codes consistent across payroll systems—especially during migrations.
+
+Find out [how to build a cost centre code here](/building-a-cost-code-formula)
+
+### Provider selection of cost centre rules
+
+For each payroll provider, you select which of your defined cost centre formulas it should use. Different providers _can_ use different formulas, but they are commonly kept the same.
+
+### Default cost codes for different work types
+
+Within provider settings, there are defaults for different sources of time:
+
+- **Rostered timesheets** (contracted hours / recurring roster patterns)
+- **Casual/published jobs** (work that comes from filling published jobs)
+
+These can be different cost codes if an organisation wants to cost casual work separately in payroll.
+
+## Custom fields (provider mapping)
+
+Some payroll providers support extra fields (e.g., for department/division style segmentation). Where API syncing is not enabled, mapping can be used to tell the system what internal field should populate a payroll field during file-based imports/exports.
+
+For example, DataPay:
+
+- DataPay includes fields like **Department** and **Division**.
+- You map those payroll fields to fields available in your system (often aligning to existing “payroll code” style fields).
+
+When API integration is used, this mapping is typically handled by the API process and may not be needed/visible in the UI.
+
+## Hourly rates
+
+<Frame>
+  ![2026 03 09 9 36 11](/images/2026-03-09_9-36-11.png)
+</Frame>
+
+This controls whether hourly rates are maintained and used for cost calculations (e.g., for budgeting/forecasting views).
+
+- If **Hourly rates for all staff** is enabled and the **API is enabled**, hourly rates can be **synced down from payroll**.
+- If API syncing is **not** enabled, hourly rates can be **maintained manually** per staff member.
+- The system can support **future-dated pay changes** (e.g., enter a pay increase effective in October ahead of time).
+
+Many organisations that use Simplifi won't enable this unless they specifically want cost calculations (hours × rate) visible in the system.
+
+## Timesheet approvals
+
+### Timesheets containing only “not sent to payroll” activities
+
+<Frame>
+  ![2026 03 09 9 43 58](/images/2026-03-09_9-43-58.png)
+</Frame>
+
+Timesheets are made up of “activities” (e.g., work, breaks, leave types). Each activity can be configured to be **sent to payroll** or **not sent to payroll**.
+
+This setting controls whether timesheets should still require approval when **all activities on the timesheet are not being sent to payroll** (e.g., leave without pay). You may still want them approved for internal control; or you might prefer they don’t show at all.
+
+Approving future timesheets (one-off, for shutdown periods)
+
+<Frame>
+  ![2026 03 09 9 45 12](/images/2026-03-09_9-45-12.png)
+</Frame>
+
+By default, approvals are intended for work **up to the date of approval** (i.e., you approve what has actually happened).
+
+A future-date option supports one-off scenarios where an organisation is closed (e.g., Christmas shutdown) and wants to approve/process leave timesheets in advance for a future period (e.g., next two weeks).
+
+## Timesheet payroll hours tolerance (clock-in/out “clean timesheet” rules)
+
+<Frame>
+  ![2026 03 09 9 52 22](/images/2026-03-09_9-52-22.png)
+</Frame>
+
+These settings are for organisations using clock-in/out behaviour, and control what gets flagged for review in payroll approvals.
+
+- A “clean” timesheet is one where clock-ins/clock-outs are close enough to scheduled times that it’s not worth reviewing.
+- The tolerance defines how many minutes outside the scheduled time are allowed before the system highlights it as something to check (e.g., 2 minutes late might be ignored; 20 minutes early/late should be reviewed).
+- E.g. Stephen clocks out at 4:57 when his shift ends at 5. He still has a clean timesheet as the time tolerance is 6 minutes, therefore his 3 minute early clock out comes under the tolerance time.
+
+### Break tolerance
+
+Break tolerance applies the same logic as above, but specifically to clocking in/out for breaks (how strict/lenient you want to be about break timing).
+
+## Rate codes
+
+<Frame>
+  ![2026 03 09 10 00 13](/images/2026-03-09_10-00-13.png)
+</Frame>
+
+Rate codes support choosing **which pay rate** applies to a timesheet entry during approvals (e.g., standard rate vs overtime rate). This isn’t commonly used by many clients, but where enabled it lets approvers select rate code(s) such as:
+
+- Rate 1 = normal pay
+- Rate 2 = overtime pay
+
+To create a new rate code, press **New Rate Code**; Type in a **name**, select which payroll providers will use this rate code and enter the **rate code** that you'd like each payroll provider to use when sending to your payroll provider. Make sure to press **Save Rate Code Details** when you are finished.
+
+## Custom fields (additional staff/profile fields)
+
+This area allows creating additional fields that can be attached to a person’s profile for payroll-related use.
+
+## Salary loadings and deductions
+
+Salary loadings/deductions allow adding extra amounts on top of base pay for costing/budgeting calculations (and where enabled, can also flow through timesheet/payroll processes depending on configuration).
+
+Examples could include:
+
+- Social club contribution
+- KiwiSaver contribution (e.g., adding an employer contribution percentage)
+- Travel allowances
+
+## Notifications
+
+Notifications can be used as reminders (for example, a daily prompt) when there are timesheets waiting to be approved—helping payroll approvers remember to return to the system and process them.

@@ -1,126 +1,462 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mintlify Starter Kit",
+  "name": "Simplifi Documentation Hub",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#dc7c3a",
+    "light": "#9cdbf9",
+    "dark": "#26b1e7"
   },
-  "favicon": "/favicon.svg",
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
-        "groups": [
+        "tab": "Simplifi Internal Documentation",
+        "icon": "code",
+        "dropdowns": [
           {
-            "group": "Getting started",
+            "dropdown": "JAS Documentation",
+            "icon": "user-doctor-message",
             "pages": [
-              "index",
-              "quickstart",
-              "development"
-            ]
-          },
-          {
-            "group": "Customization",
-            "pages": [
-              "essentials/settings",
-              "essentials/navigation"
-            ]
-          },
-          {
-            "group": "Writing content",
-            "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/components",
-              "essentials/reusable-snippets"
-            ]
-          },
-          {
-            "group": "Agent ready",
-            "pages": [
-              "agent-ready/prompt",
-              "agent-ready/visibility",
-              "agent-ready/contextual",
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
+              "internal",
+              {
+                "group": "New to Simplifi?",
+                "pages": [
+                  "job-queue",
+                  "test-test2-dev",
+                  "system-servers-portals-apps",
+                  "accessing-the-web-app"
+                ]
+              },
+              {
+                "group": "Developing Simplifi",
+                "pages": [
+                  "the-developer-enviroment",
+                  "leave-management-overview"
+                ]
+              },
+              {
+                "group": "Customer Support",
+                "pages": [
+                  "manage-devices",
+                  "how-to-create-a-new-temp-staff",
+                  "viewing-audit-trails",
+                  "common-errors"
+                ]
+              },
+              {
+                "group": "Quick Start & Setup",
+                "pages": [
+                  "setting-up-the-system",
+                  {
+                    "group": "Setting up Organisations",
+                    "pages": [
+                      "setting-up-an-organisation",
+                      "how-to-set-up-a-new-organisation-part-2"
+                    ]
+                  },
+                  "how-to-set-up-payroll-providers"
+                ]
+              },
+              {
+                "group": "FAQ's",
+                "pages": [
+                  "how-to-schedule-a-report",
+                  "the-difference-between-a-user-and-staff",
+                  "how-to-change-your-password",
+                  "temp-staff"
+                ]
+              },
+              {
+                "group": "Reports",
+                "pages": [
+                  {
+                    "group": "Staff Reports",
+                    "pages": [
+                      "staff-summary",
+                      "role-summary",
+                      "casual-jobs"
+                    ]
+                  },
+                  {
+                    "group": "Organisation Reports",
+                    "pages": [
+                      "organisation-summary",
+                      "organisation-anniversary",
+                      "organisation-churn",
+                      "published-jobs",
+                      "m-odule-u-sage",
+                      "eom-timesheets"
+                    ]
+                  },
+                  {
+                    "group": "Job Reports",
+                    "pages": [
+                      "advertised-agency-jobs",
+                      "published-casual-jobs"
+                    ]
+                  },
+                  {
+                    "group": "System Reports",
+                    "pages": [
+                      "biggest-web-users",
+                      "web-requests",
+                      "website-activity"
+                    ]
+                  }
+                ]
+              }
             ]
           }
         ]
       },
       {
-        "tab": "API reference",
-        "groups": [
+        "tab": "Simplifi Documentation",
+        "icon": "s",
+        "dropdowns": [
           {
-            "group": "API documentation",
-            "pages": [
-              "api-reference/introduction"
+            "dropdown": "Simplifi Documentation",
+            "icon": "s",
+            "groups": [
+              {
+                "group": "Simplifi",
+                "public": true,
+                "pages": [
+                  "about"
+                ]
+              },
+              {
+                "group": "Admin/Our Profile Settings",
+                "public": true,
+                "pages": [
+                  {
+                    "group": "Our Locations",
+                    "pages": [
+                      "how-to-add-a-second-location"
+                    ]
+                  },
+                  {
+                    "group": "Our Users/Our Additional Users",
+                    "pages": [
+                      "untitled-page",
+                      "how-to-add-a-new-user",
+                      "our-additional-users"
+                    ]
+                  },
+                  {
+                    "group": "Our Roles",
+                    "pages": [
+                      "our-roles",
+                      "one-click-breaks"
+                    ]
+                  },
+                  {
+                    "group": "Our Shifts, Breaks and Working Hours",
+                    "pages": [
+                      "our-store-options-and-settings",
+                      "how-to-create-a-new-shift"
+                    ]
+                  },
+                  {
+                    "group": "Clocking In & Out",
+                    "pages": [
+                      "clocking-in-and-out"
+                    ]
+                  },
+                  {
+                    "group": "Timesheet Activities",
+                    "pages": [
+                      "how-to-make-a-new-timesheet-activity"
+                    ]
+                  },
+                  {
+                    "group": "Leave Requests",
+                    "pages": [
+                      "our-leave-request-options"
+                    ]
+                  },
+                  {
+                    "group": "Public Holidays & Closedown Periods",
+                    "pages": [
+                      "public-holidays-and-closedown-period"
+                    ]
+                  },
+                  {
+                    "group": "File Import Templates",
+                    "pages": [
+                      "how-to-make-a-file-import-template"
+                    ]
+                  },
+                  {
+                    "group": "Integrations",
+                    "pages": [
+                      "api-integrations"
+                    ]
+                  },
+                  {
+                    "group": "Payroll Settings/Payroll Engine",
+                    "pages": [
+                      "payroll-settings",
+                      "payroll-rules-engine",
+                      "how-to-make-a-new-payroll-rule-in-the-engine",
+                      "how-to-create-a-new-loading-deduction",
+                      "building-a-cost-code-formula"
+                    ]
+                  },
+                  {
+                    "group": "Rostering Settings",
+                    "pages": [
+                      "our-rostering-settings"
+                    ]
+                  },
+                  {
+                    "group": "Google/Apple Calendars",
+                    "pages": [
+                      "google-apple-calendars"
+                    ]
+                  },
+                  {
+                    "group": "Job/Timesheet/Staff Information Collected",
+                    "pages": [
+                      "job-information-fields"
+                    ]
+                  },
+                  {
+                    "group": "Third Party Details/Information",
+                    "pages": [
+                      "third-party-details"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "Employee Help",
+                "public": true,
+                "pages": [
+                  "employee-self-service",
+                  "setting-a-secure-password",
+                  "managing-your-calendar",
+                  "apply-for-additional-jobs-shifts",
+                  "managing-leave",
+                  "clocking-in-and-out-using-your-phone",
+                  "forgot-your-password",
+                  "access-your-simplifi-account-via-web-browser",
+                  "request-a-timesheet-modification",
+                  "request-to-swap-shifts",
+                  "how-to-update-your-compliance"
+                ]
+              },
+              {
+                "group": "Staff Profiles",
+                "public": true,
+                "pages": [
+                  "staff-profiles-overview",
+                  "how-to-terminate-a-staff-member-casual",
+                  "how-to-assign-the-company-manager",
+                  "how-to-reactivate-a-user",
+                  "how-to-make-a-user-inactive",
+                  "how-to-promote-an-employee-to-a-user",
+                  "how-to-reset-an-employees-password",
+                  "how-to-add-a-manually-maintained-employee",
+                  "how-to-set-up-a-new-employee-from-a-sync",
+                  "how-to-find-an-employees-profile",
+                  "staff-compliance",
+                  "what-is-a-group"
+                ]
+              },
+              {
+                "group": "Staff Rostering",
+                "public": true,
+                "pages": [
+                  "staff-rostering-overview",
+                  "how-to-mark-an-absence-on-the-roster",
+                  "how-to-change-the-shift-times-on-a-roster",
+                  "how-to-add-a-staff-member-to-the-roster",
+                  "how-to-edit-or-cancel-a-job",
+                  {
+                    "group": "Relievers Help",
+                    "public": true,
+                    "pages": [
+                      "how-to-assign-a-reliver-via-phone-app"
+                    ]
+                  },
+                  {
+                    "group": "Jobs Help",
+                    "public": true,
+                    "pages": [
+                      "how-to-publish-a-job",
+                      "how-to-publish-a-job-via-phone-app",
+                      "how-to-publish-a-job-for-additional-casual-staff-via-roster",
+                      "best-practice-for-updating-job-times-once-a-job-is-assigned"
+                    ]
+                  },
+                  "how-to-view-the-daily-schedule",
+                  "how-to-add-a-staff-member-to-a-roster"
+                ]
+              },
+              {
+                "group": "Time, Attendance & Approvals",
+                "public": true,
+                "pages": [
+                  "time-attendance-and-approvals-overview",
+                  {
+                    "group": "Staff Hours Help",
+                    "public": true,
+                    "pages": [
+                      "how-to-change-contracted-hours",
+                      "how-to-remove-contracted-hours-from-a-day",
+                      "how-to-copy-contracted-hours-to-other-days-of-the-week",
+                      "how-to-set-up-contracted-hours-with-multiple-shifts",
+                      "how-to-add-an-unpaid-break-into-contracted-hours",
+                      "how-to-set-up-new-contracted-hours",
+                      "how-to-add-move-remove-or-extend-a-rest-break",
+                      "how-to-add-move-remove-or-extend-a-meal-break"
+                    ]
+                  },
+                  {
+                    "group": "Timesheets Help",
+                    "public": true,
+                    "pages": [
+                      "generating-future-timesheets",
+                      "how-to-approve-a-timesheet-1",
+                      "how-to-add-or-change-timesheet-activities",
+                      "how-to-amend-a-timesheet",
+                      "how-to-unapprove-a-timesheet",
+                      "how-to-approve-a-timesheet-2",
+                      "how-to-view-a-timesheet"
+                    ]
+                  },
+                  "how-to-clock-in-out-on-behalf-of-a-staff-member",
+                  "how-to-send-a-shift-reminder-to-a-staff-member",
+                  "how-to-process-a-shift-swap-request",
+                  "how-to-edit-or-cancel-a-published-shift",
+                  "how-to-assign-a-staff-member-casual-to-a-published-shift",
+                  "how-to-add-lieu-earned-overtime-or-another-activity-on-the-roster",
+                  "how-to-change-the-times-of-a-shift",
+                  "how-to-delete-a-shift-from-the-roster",
+                  "managing-schedules-with-the-multi-period-shift-option",
+                  "using-the-simplifi-kiosk-on-apple-devices"
+                ]
+              },
+              {
+                "group": "Reporting",
+                "public": true,
+                "pages": [
+                  "reporting-overview",
+                  "how-to-create-new-reporting-roles"
+                ]
+              },
+              {
+                "group": "Casual Staff Management",
+                "public": true,
+                "pages": [
+                  "casual-staff-management",
+                  "how-to-assign-a-casual-with-alternative-responses",
+                  "how-to-unassign-a-casual-from-a-job"
+                ]
+              },
+              {
+                "group": "Leave Management",
+                "public": true,
+                "pages": [
+                  "leave-management-overview-1",
+                  "how-to-change-decisions-for-a-leave-request",
+                  "how-to-process-a-leave-request",
+                  "how-to-record-leave-for-a-staff-member",
+                  "how-to-endorse-a-leave-request"
+                ]
+              },
+              {
+                "group": "Payroll Integration",
+                "public": true,
+                "pages": [
+                  "payroll-integration-overview",
+                  "payroll-processing-method",
+                  "payroll-processing-method-csv-file"
+                ]
+              },
+              {
+                "group": "Release Notes",
+                "hidden": true,
+                "public": true,
+                "pages": [
+                  "january-2026"
+                ]
+              }
             ]
           },
           {
-            "group": "Endpoint examples",
+            "dropdown": "Simplifi Documentation V2.0",
+            "hidden": true
+          }
+        ]
+      },
+      {
+        "tab": "On Task Documentation",
+        "icon": "check",
+        "dropdowns": [
+          {
+            "dropdown": "On Task",
+            "icon": "check",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "ontask",
+              "how-to-assign-the-store-manager",
+              "how-to-set-up-user-permissions-for-a-department-manager",
+              {
+                "group": "Beacon Management",
+                "pages": [
+                  "how-to-configure-a-beacon",
+                  "how-to-test-a-beacon",
+                  "how-to-monitor-beacon-battery-levels"
+                ]
+              },
+              {
+                "group": "Training Modules",
+                "pages": [
+                  "user-training",
+                  "store-administration-training"
+                ]
+              }
             ]
           }
         ]
+      },
+      {
+        "tab": "API Documentation",
+        "icon": "gear-code",
+        "public": true,
+        "pages": [
+          "overview",
+          "authentication",
+          "errors",
+          {
+            "group": "API Endpoints",
+            "openapi": "simplifi_openapi.json"
+          }
+        ]
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
+    ]
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/images/Simplifi_RGB.png",
+    "dark": "/images/Simplifi_RGB.png",
+    "href": "https://simplifi.work/"
   },
-  "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
-      }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
-    }
+  "fonts": {
+    "family": "Inter"
   },
-  "contextual": {
-    "options": [
-     "copy",
-     "view",
-     "chatgpt",
-     "claude",
-     "perplexity",
-     "mcp",
-     "cursor",
-     "vscode"
-   ]
+  "background": {
+    "image": "/betterjobqueue.png"
+  },
+  "favicon": "/images/AppIcon.png",
+  "appearance": {
+    "strict": true
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "linkedin": "https://www.linkedin.com/company/simplifi-work/"
     }
+  },
+  "interaction": {
+    "drilldown": false
   }
 }

@@ -1,0 +1,124 @@
+---
+title: "How to Set up a new Organisation - Part 2"
+---
+
+## About
+
+The Organisation is the business or organisation that employs and manages the users in Simplifi. This is the second part to setting up an organisation.
+
+## Setting Up Guide
+
+You can follow this guide to set up an organisation. This guide will run through heading by heading and detail what the settings are, what they do and provide an example of the setting. If a setting is complicated, it will lead to another page.
+
+<Warning>
+  Some options are omitted in the guide, these are the self-explanatory checkboxes and information fields
+</Warning>
+
+Now we move on to the settings hidden in the tabs to the right of your screen
+
+<Frame>
+  ![2026 02 25 9 48 55](/images/2026-02-25_9-48-55.png)
+</Frame>
+
+9. **Users/Roles/Shifts**
+
+   Set up users/staff in this tab who will be using the system. Enter the details for the user, then press save user details to save the user to the system. To edit any staff members, press a staff member from the list.
+
+   Select the available roles for the organisation on the right.
+
+<Frame>
+  ![2026 02 24 16 24 22 1](/images/2026-02-24_16-24-22-1.png)
+</Frame>
+
+10. **Rostering**
+
+    Mark checkboxes as appropriate here for Rostering settings
+
+| Setting Name                                                  | Description                                                                                                                                                                                                                                                      |
+| :------------------------------------------------------------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Organisation has staff                                        | Does this organisation actually have staff? A head office will most likely not                                                                                                                                                                                   |
+| Using Rostering Module                                        | Is the organisation actually using the rostering module? If they are not, the rest of these settings you may skip.                                                                                                                                               |
+| All organisations within this head office are using rostering | Select this if all organisations controlled by this head office are using rostering                                                                                                                                                                              |
+| User access needs to be set up for each department/room       | If this is not set it means all users (with rostering access) can access all rooms/departments which is the default. For a larger set up such as a supermarket, this flag can be set which means only users with access can access the roster for the department. |
+| User access needs to be setup for each role                   | If users can access all roles **what does this mean**                                                                                                                                                                                                            |
+| Profiles used to calculate number required staff              | If this organisation uses profiles to generate the number of required staff                                                                                                                                                                                      |
+| Casual jobs require role and room/department match             | Casual jobs must require the casual staff's stated role/department and the job's department to match                                                                                                                                                             |
+| All organisations use head office rostering settings          | ???                                                                                                                                                                                                                                                              |
+| Users have a primary organisation                             |                                                                                                                                                                                                                                                                  |
+| Users have a primary role                                     |                                                                                                                                                                                                                                                                  |
+| Users have a home room/department                             | If staff can work across multiple                                                                                                                                                                                                                                |
+| Have standby timesheets                                       | This allows non-working timesheets such as a staff member being 'on-call' to be created                                                                                                                                                                          |
+| Staff can be set up with contracted hours and roles           | This makes the leave module available, as well as its main purpose of allowing staff to be set up with contracted hours and roles                                                                                |
+| Staff can be set up with work patterns                        | ???                                                                                                                                                                                                                                                              |
+| Give option to copy rosters across days or weeks              | Gives the option to copy rosters across days and weeks                                                                                                                                                                                                           |
+| Give option to copy timesheets across days                    | Gives the option to copy the current timesheet across days                                                                                                                                                                                                       |
+| Give option to clear weekly rosters                           | Gives the user the option to clear rosters across future weeks                                                                                                                                                                                                   |
+| Staff can create their own timesheets                         | Gives staff the option to create their own timesheets. This has to be manually turned on per staff member, however.                                                                                                                                               |
+| Shift Swaps Options                                           | These configure how shift swaps work. - What is difference between these                                                                                                                                                                                         |
+| Keep original shift swap timesheets                           | When a shift swap is processed, instead of removing the original shift, it keeps it and replaces its activity with the specified activity in the below dropbox. eg. General Ward Nurse is replaced with Leave Without Pay                                       |
+| Require shift swap endorsements                               | Requires the shift swap partner to confirm they are willing to swap                                                                                                                                                                                              |
+| Date change options                                           | ???                                                                                                                                                                                                                                                              |
+| External data provider                                        | If the organisation is pulling their rostering requirements from an external data source, mark this source in this box                                                                                                                                           |
+
+11. **Payroll**
+
+<Frame>
+  ![2026 02 25 9 19 13 1](/images/2026-02-25_9-19-13-1.png)
+</Frame>
+
+| Setting Name                      | Description                                                                                                                                                                                               |
+| :-------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Current Payroll Provider          | Select the payroll provider for this organisation. Multiple providers can be set up but only one can be used at a time                                                                                    |
+| Hours Require Approval            | Hours submitted by staff require separate approval before payroll can be processed                                                                        |
+| Only Approve Completed Timesheets | Timesheets can only be approved if the time that they are for has passed. eg. If it is 3pm and you are trying to approve a timesheet that stretches to 6pm, with this tick check it would not be possible. |
+
+<Frame>
+  ![2026 02 25 9 22 15 1](/images/2026-02-25_9-22-15-1.png)
+</Frame>
+
+Press Inactive Timesheets to bring up this window. If the Organisation has loaded timesheets that you do not want sent to payroll in this window you can select the date in the second tab, while in the first ("external timesheet provider") you can select a date to backfill timesheets.
+
+12. **Payroll Settings**
+
+With each payroll provider, certain settings must be configured to set the provider up correctly.
+
+| Setting Name                                            | Description                                                                                                                                                                                                                         |
+| :------------------------------------------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Pay Increment                                           | The timesheet hours are rounded. This is how much they are rounded to.  eg. if a staff member clocks out at 4:57 and the increment is 5 minutes, the timesheet is showing as 8 hours for a 9-5 shift.                               |
+| Change all organisations to same increment              |                                                                                                                                                                                                                                     |
+| Round timesheet start and finish times                  | This setting means that the timesheet start and finish times are also rounded. In the same example as the top setting, that 9-4:57 shift would not just show as 8 hours total but also round the start and finish to 9-5pm as well. |
+| Show Timesheets in Payroll to End of Current Pay Period | If the timesheets haven't been processed after the current pay period has ended, they will not show up in the payroll module                                                                                                        |
+| Show Organisation on Timesheet Details                  | **Archived?**                                                                                                                                                                                                                       |
+| Allow same day timesheet amendments for flat files      | Applicable to payroll providers that use flat files uploads instead of an API/FTP. If this setting is selected then the user can amend the timesheet the same day that the timesheet is processed                                   |
+| Has Hourly Pay Rates for Staff                          | This organisation has hourly pay rates for their staff                                                                                                                                                                              |
+| Has Payroll Awards/Rules Engine                         | This enables the payroll awards/rules engine module                                                                                                                                                                                 |
+| Process Days Worked Payroll Element                     | If this option is ticked then a days worked payroll element is included in the export file or API upload                                                                                                                            |
+| Process Hours Paid in Week Payroll Element              | If this option is ticked then a hours paid in week payroll element is included in the export file or API upload                                                                                                                     |
+| Can Pay Staff across Organisations                      | If this is ticked, then staff that are working at this organisation can be paid by another in the case that they are loaned out for example to another company                                                                      |
+| Daylight Savings Settings                               | **????**                                                                                                                                                                                                                            |
+| Clear staff payroll code on termination                 | ???                                                                                                                                                                                                                                 |
+| Leave staff payroll code on termination                 | When a staff member is terminated their payroll code is just left as is and is not updated by syncing                                                                                                                               |
+| Archive                                                 | Ticking this archives the provider, keeping their configurations but stopping the organisation from using this provider **Ending part???**                                                                                          |
+
+12. **Payroll Forecasting**
+
+Check this if the forecasting module needs to be enabled.
+
+13. **Leave Requests**
+
+| Setting Name                                                                   | Description                                                                                                                                                                                                                                                        |
+| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Has Leave Requests module enabled                                              | Ticking this box enables the leave requests module                                                                                                                                                                                                                 |
+| Leave Endorsements enabled                                                     | If this is ticked then the leave requests are approved and managed at the head office instead of the individual branches                                                                                                                                           |
+| Each Room/Department needs to approve requests that cover multiple departments | If the employee is split across multiple departments then each department manager will have to approve the leave                                                                                                                                                   |
+| Show annual leave projected balances                                           | If this setting is turned on when approving leave managers will be able to view projected balances of annual leave                                                                                                                                                   |
+| Show projected balances to staff                                                 | If this setting is turned on staff will also be able to see their projected balances                                                                                                                                                                               |
+| Default leave entitlement                                                      | Default number of weeks leave entitlement for each employee                                                                                                                                                                                                        |
+| Leave Balance Warnings enabled                                                 | If this is turned on, then staff will receive a warning pop-up if they try to apply for leave that exceeds their balance                                                                                                                                              |
+| Public Holidays based on organisation address rather than the staff addresses  | Public holidays that are specific to different regions (e.g. Canterbury Anniversary Day) are applied based on the address specified in the business's address rather than the employee's address (e.g. business is in Canterbury but employee's address is in Otago) |
+
+14. **External Timesheets**
+
+    This feature allows timesheet details to be sent to a third party. Currently only InfoCare is supported **Is this true?** If this organisation is a head office, you will also have the option to turn external timesheets on for all organisations.
+
+Upon completing this guide, you will have entered all the settings for a new organisation in Simplifi. **Make sure to save your work!** Press **Save Organisation Details** at the bottom to save the settings. The organisation is now set up!

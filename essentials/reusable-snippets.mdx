@@ -1,100 +1,110 @@
 ---
 title: "Reusable snippets"
-description: "Write once, reuse everywhere. Use snippets to keep content in sync across pages"
+description: "Reusable, custom snippets to keep content in sync"
 icon: "recycle"
 ---
 
-Any content you find yourself repeating across pages is a good candidate for a snippet. Create the file once in the `snippets/` directory, import it wherever you need it, and updates propagate everywhere automatically.
+import SnippetIntro from '/snippets/snippet-intro.mdx';
+
+<SnippetIntro />
+
+## Creating a custom snippet
+
+**Pre-condition**: You must create your snippet file in the `snippets` directory.
 
 <Note>
-  Files inside `snippets/` are not rendered as standalone pages. They only appear where you import them.
+  Any page in the `snippets` directory will be treated as a snippet and will not
+  be rendered into a standalone page. If you want to create a standalone page
+  from the snippet, import the snippet into another file and call it as a
+  component.
 </Note>
 
-## Content snippets
+### Default export
 
-The simplest pattern: write MDX content in a snippet file and import it as a component.
+1. Add content to your snippet file that you want to re-use across multiple
+   locations. Optionally, you can add variables that can be filled in via props
+   when you import the snippet.
 
-```mdx snippets/prerequisites.mdx
-Before you begin, make sure you have:
-- Node.js 18 or higher
-- An API key from your [dashboard](https://dashboard.example.com)
+```mdx snippets/my-snippet.mdx
+Hello world! This is my content I want to reuse across pages. My keyword of the
+day is {word}.
 ```
 
-Import it into any page using a root-relative path:
+<Warning>
+  The content that you want to reuse must be inside the `snippets` directory in
+  order for the import to work.
+</Warning>
 
-```mdx your-page.mdx
+2. Import the snippet into your destination file.
+
+```mdx destination-file.mdx
 ---
-title: Install the SDK
+title: My title
+description: My Description
 ---
 
-import Prerequisites from '/snippets/prerequisites.mdx';
+import MySnippet from '/snippets/path/to/my-snippet.mdx';
 
-<Prerequisites />
+## Header
 
-## Installation
-...
+Lorem ipsum dolor sit amet.
+
+<MySnippet word="bananas" />
 ```
 
-You can also use relative imports, which enables CMD+click navigation to the snippet in your editor:
+### Reusable variables
 
-```mdx
-import Prerequisites from '../snippets/prerequisites.mdx';
+1. Export a variable from your snippet file:
+
+```mdx snippets/path/to/custom-variables.mdx
+export const myName = 'my name';
+
+export const myObject = { fruit: 'strawberries' };
 ```
 
-## Variable snippets
+2. Import the snippet from your destination file and use the variable:
 
-Export named constants from a snippet file to reuse values like product names, version numbers, or URLs.
+```mdx destination-file.mdx
+---
+title: My title
+description: My Description
+---
 
-```mdx snippets/vars.mdx
-export const sdkVersion = '3.2.0';
-export const baseUrl = 'https://api.example.com/v1';
+import { myName, myObject } from '/snippets/path/to/custom-variables.mdx';
+
+Hello, my name is {myName} and I like {myObject.fruit}.
 ```
 
-Import and use them inline:
+### Reusable components
 
-```mdx your-page.mdx
-import { sdkVersion, baseUrl } from '/snippets/vars.mdx';
+1. Inside your snippet file, create a component that takes in props by exporting
+   your component in the form of an arrow function.
 
-The current SDK version is **{sdkVersion}**.
-
-All requests go to `{baseUrl}`.
-```
-
-## Component snippets
-
-For snippets that need to vary based on where they're used, export an arrow function component that accepts props.
-
-```mdx snippets/endpoint-note.mdx
-export const EndpointNote = ({ method, path }) => (
-  <Note>
-    This guide covers the <code>{method} {path}</code> endpoint.
-    See the <a href="/api-reference/introduction">API reference</a> for full details.
-  </Note>
+```mdx snippets/custom-component.mdx
+export const MyComponent = ({ title }) => (
+  <div>
+    <h1>{title}</h1>
+    <p>... snippet content ...</p>
+  </div>
 );
 ```
 
-* Use arrow function syntax (`const Foo = () => ...`).
-* The `function` keyword is not supported in snippet files.
-* MDX syntax doesn't compile inside arrow function bodies. Use plain HTML tags there, or use a default export instead.
+<Warning>
+  MDX does not compile inside the body of an arrow function. Stick to HTML
+  syntax when you can or use a default export if you need to use MDX.
+</Warning>
 
-Pass props when you render it:
+2. Import the snippet into your destination file and pass in the props
 
-```mdx your-page.mdx
-import { EndpointNote } from '/snippets/endpoint-note.mdx';
+```mdx destination-file.mdx
+---
+title: My title
+description: My Description
+---
 
-<EndpointNote method="POST" path="/v1/users" />
-```
+import { MyComponent } from '/snippets/custom-component.mdx';
 
-## Snippets importing snippets
+Lorem ipsum dolor sit amet.
 
-Snippets can import other snippets, which is useful for composing larger shared sections from smaller pieces.
-
-```mdx snippets/auth-intro.mdx
-import AuthNote from '/snippets/auth-note.mdx';
-
-## Authentication
-
-All endpoints require a bearer token.
-
-<AuthNote />
+<MyComponent title={'Custom title'} />
 ```
